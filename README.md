@@ -1,16 +1,20 @@
 <div align="center">
+  
   <img width="192" title="Whatsapp-Bot-Multi-Device-Profile" src="https://github.com/ArugaZ.png"/>
+
 </div>
 
 <div align="center">
-    <img title="Whatsapp-Bot-Multi-Device" src="https://img.shields.io/badge/Whatsapp%20Bot%20Multi%20Device-green?colorA=%23ff0000&colorB=%23017e40&style=for-the-badge">
+
+  <img title="Whatsapp-Bot-Multi-Device" src="https://img.shields.io/badge/Whatsapp%20Bot%20Multi%20Device-green?colorA=%23ff0000&colorB=%23017e40&style=for-the-badge">
+
 </div>
 
 ---
 
 <div align="center">  
   <a href="https://github.com/ArugaZ">
-    <img title="Whatsapp-Bot-Multi-Device-Author" src="https://img.shields.io/badge/AUTHOR-ARUGAZ-orange.svg?style=for-the-badge&logo=github"></a>
+    <img title="ArugaZ" src="https://img.shields.io/badge/AUTHOR-ARUGAZ-orange.svg?style=for-the-badge&logo=github"></a>
 </div>
 <div align="center">
   <a href="https://www.codefactor.io/repository/github/arugaz/whatsapp-bot/overview/master">
@@ -34,23 +38,46 @@
     <img title="Whatsapp-Bot-Multi-Device-Watching" src="https://img.shields.io/github/watchers/arugaz/whatsapp-bot?label=Watchers&color=%23e2f0cb&style=flat-square">
   </a>
   <a href="https://github.com/arugaz/whatsapp-bot/blob/master/LICENSE">
-    <img title="Whatsapp-Bot-Multi-Device-License" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg?color=%23b5ead7&style=flat-square"/>
+    <img title="Whatsapp-Bot-Multi-Device-License" src="https://img.shields.io/badge/License-GPL_3.0_or_later-blue.svg?color=%23b5ead7&style=flat-square"/>
   </a>
   <a href="https://hits.seeyoufarm.com">
     <img title="Whatsapp-Bot-Multi-Device-Hits" src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FArugaZ%2Fwhatsapp-bot&count_bg=%23c7ceea&title_bg=%23555555&icon=probot.svg&icon_color=%23c7ceea&title=Hits&edge_flat=true"/>
   </a>
 </div>
 <div align="center">
-  <details>
-    <summary>🥟 Help me!</summary>
-    <p><a href="https://ko-fi.com/arugaz">Ko-Fi</a></p>
-    <p><a href="https://trakteer.id/arugaz/tip">Trakteer</a></p>
-  </details>
-
   <p>Don't forget to click ⭐️ and fork this repository</p>
-
-  <p>Need help? please create <a href="https://github.com/arugaz/whatsapp-bot/issues">issues</a> or chat me on <a href="https://wa.me/6285163651710" target="_blank">whatsapp</a></p>
 </div>
+
+---
+
+<p align="center"> This whatsapp bot project (now) use 
+  <a href="https://github.com/adiwajshing/Baileys">Baileys Multi-Device.</a>
+</p>
+
+<p align="center">
+  <img title="Whatsapp-Bot-Typescript" src="https://img.shields.io/badge/Typescript-031b36?style=for-the-badge&logo=typescript&logoColor=3178C6"></img>
+  <img title="Whatsapp-Bot-Prisma" src="https://img.shields.io/badge/prisma-29245c?style=for-the-badge&logo=prisma&logoColor=F7DF1E"></img>
+  <img title="Whatsapp-Bot-Mongo" src="https://img.shields.io/badge/mongoDB-033604?style=for-the-badge&logo=mongodb&logoColor=47A248"></img>
+</p>
+
+---
+
+<p align="center">
+  <a href="https://github.com/arugaz/whatsapp-bot"><b>whatsapp-bot</b></a> out-of-the-box support on...
+</p>
+
+<p align="center">
+  <img title="Whatsapp-Bot-Termux" src="https://img.shields.io/badge/Termux-302c2c?style=for-the-badge&logo=iterm2&logoColor=000000"></img>
+  <img title="Whatsapp-Bot-Server" src="https://img.shields.io/badge/self hosting-3d1513?style=for-the-badge&logo=serverless&logoColor=FD5750"></img>
+  <img title="Whatsapp-Bot-Railway" src="https://img.shields.io/badge/railway-362b2b?style=for-the-badge&logo=railway&logoColor=0B0D0E"></img>
+</p>
+<p align="center">
+  <img title="Whatsapp-Bot-Heroku" src="https://img.shields.io/badge/heroku-9d7acc?style=for-the-badge&logo=heroku&logoColor=430098"></img>
+  <img title="Whatsapp-Bot-Koyeb" src="https://img.shields.io/badge/koyeb-362b2b?style=for-the-badge&logo=koyeb&logoColor=121212"></img>
+  <img title="Whatsapp-Bot-Replit" src="https://img.shields.io/badge/replit-3b1903?style=for-the-badge&logo=replit&logoColor=F26207"></img>
+</p>
+
+<p align="center">Need help? please create an <a href="https://github.com/arugaz/whatsapp-bot/issues">issues</a></p>
 
 ---
 
@@ -58,8 +85,8 @@
 
 This project require
 
-- NodeJS v16 or greater [Install](https://nodejs.org/dist/)
-- FFMPEG [Install](https://ffmpeg.org/download.html)
+- [NodeJS](https://nodejs.org/en/download/) [v16 or greater](https://nodejs.org/dist/)
+- [FFMPEG](https://ffmpeg.org/download.html)
 
 ## Install
 
@@ -166,7 +193,7 @@ Please refer to our [Contribution Guidelines](CONTRIBUTING.md) and [Code of Cond
 
 <section>
 
-**whatsapp-bot** is available under the Apache-2.0 license. See the [LICENSE](LICENSE) file for more info.
+since **whatsapp-bot** use [baileys](https://github.com/adiwajshing/Baileys) is now available under the GPL-3.0 license. See the [LICENSE](LICENSE) file for more info.
 
 </section>
 
@@ -181,10 +208,11 @@ Please refer to our [Contribution Guidelines](CONTRIBUTING.md) and [Code of Cond
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href="https://github.com/TobyG74"><img src="https://avatars.githubusercontent.com/u/32604979?v=4?s=100" width="100px;" alt="Tobi Saputra"/><br /><sub><b>Tobi Saputra</b></sub></a><br /><a href="https://github.com/arugaz/whatsapp-bot/commits?author=TobyG74" title="Code">💻</a></td>
-      <td align="center"><a href="https://github.com/arugaz"><img src="https://avatars.githubusercontent.com/u/53950128?v=4?s=100" width="100px;" alt="ArugaZ"/><br /><sub><b>ArugaZ</b></sub></a><br /><a href="https://github.com/arugaz/whatsapp-bot/commits?author=arugaz" title="Code">💻</a> <a href="#ideas-arugaz" title="Ideas, Planning, & Feedback">🤔</a></td>
-      <td align="center"><a href="https://youtube.com/GuckTubeYT"><img src="https://avatars.githubusercontent.com/u/56192597?v=4?s=100" width="100px;" alt="Muhammad Kevin"/><br /><sub><b>Muhammad Kevin</b></sub></a><br /><a href="https://github.com/arugaz/whatsapp-bot/commits?author=GuckTubeYT" title="Code">💻</a></td>
-      <td align="center"><a href="https://github.com/LSystemus-2"><img src="https://avatars.githubusercontent.com/u/90476449?v=4?s=100" width="100px;" alt="LSystemus-2"/><br /><sub><b>LSystemus-2</b></sub></a><br /><a href="https://github.com/arugaz/whatsapp-bot/issues?q=author%3ALSystemus-2" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/TobyG74"><img src="https://avatars.githubusercontent.com/u/32604979?v=4?s=100" width="100px;" alt="Tobi Saputra"/><br /><sub><b>Tobi Saputra</b></sub></a><br /><a href="https://github.com/arugaz/whatsapp-bot/commits?author=TobyG74" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/arugaz"><img src="https://avatars.githubusercontent.com/u/53950128?v=4?s=100" width="100px;" alt="ArugaZ"/><br /><sub><b>ArugaZ</b></sub></a><br /><a href="https://github.com/arugaz/whatsapp-bot/commits?author=arugaz" title="Code">💻</a> <a href="#ideas-arugaz" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://youtube.com/GuckTubeYT"><img src="https://avatars.githubusercontent.com/u/56192597?v=4?s=100" width="100px;" alt="Muhammad Kevin"/><br /><sub><b>Muhammad Kevin</b></sub></a><br /><a href="https://github.com/arugaz/whatsapp-bot/commits?author=GuckTubeYT" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/LSystemus-2"><img src="https://avatars.githubusercontent.com/u/90476449?v=4?s=100" width="100px;" alt="LSystemus-2"/><br /><sub><b>LSystemus-2</b></sub></a><br /><a href="https://github.com/arugaz/whatsapp-bot/issues?q=author%3ALSystemus-2" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Issa2001"><img src="https://avatars.githubusercontent.com/u/89695452?v=4?s=100" width="100px;" alt="一茶"/><br /><sub><b>一茶</b></sub></a><br /><a href="#ideas-Issa2001" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>

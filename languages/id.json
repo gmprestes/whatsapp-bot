@@ -1,4 +1,7 @@
 {
+  "default": {
+    "onWhatsApp": "{{@NUM}} tidak terdaftar di whatsapp"
+  },
   "handlers": {
     "call": {
       "reject": "Maaf, aku tidak bisa menerima telepon!",
@@ -6,7 +9,9 @@
       "ban": "Maaf, aku akan ban kamu!"
     },
     "group-participant": {
+      "welcome": "Halo {{@PPL}} 👋, Terima kasih banyak telah bergabung dengan {{@GRP}} sebagai salah satu anggota terbaru kami. Senang menyambut kamu di grup kami!",
       "anticountry": "Maaf {{@PPL}}, di grup ini dilarang untuk nomor telepon dengan awalan {{@NUM}}",
+      "leave": "Suatu kehormatan bisa bertemu dengan {{@PPL}}. Anda hanya berhak mendapatkan yang terbaik! Selamat tinggal 👋",
       "promote": "{{@ADM}} telah mempromosikan {{@PPL}} menjadi admin grup",
       "demote": "{{@ADM}} telah mendemosikan {{@PPL}} menjadi anggota grup"
     },
@@ -47,11 +52,13 @@
   },
   "commands": {
     "general": {
+      "didyoumean": {
+        "title": "Perintah yang kamu ketik tidak tercantum, mungkin ini yang kamu maksud:",
+        "same": "kesamaan"
+      },
       "language": {
         "changed": "Bahasa telah diubah menjadi {{@LANGUAGE}}!",
-        "title": "Dukungan bahasa",
-        "text": "Kamu dapat mengubah bahasa saat berinteraksi dengan aku, berikut beberapa bahasa yang didukung",
-        "buttonText": "DAFTAR BAHASA"
+        "text": "Kamu dapat mengubah bahasa saat berinteraksi dengan aku, berikut beberapa bahasa yang didukung"
       },
       "menu": {
         "cmd": {
@@ -85,8 +92,7 @@
           "two": "di obrolan pribadi",
           "three": "dengan mengetik {{@COMMANDS}}"
         },
-        "bottom": "Berikut ini adalah beberapa fitur yang terdapat dalam bot.",
-        "buttonText": "DAFTAR MENU"
+        "bottom": "Berikut ini adalah beberapa fitur yang terdapat dalam bot."
       }
     },
     "group": {
@@ -101,7 +107,52 @@
           "numList": "Daftar kode negara di grup: {{@NUM}}"
         },
         "list": "Daftar semua kode negara yang tersedia berdasarkan {{@URL}}"
+      },
+      "antilink": {
+        "enable": "Berhasil mengaktifkan {{@CMD}}, bot akan langsung menendang anggota grup yang mengirimkan tautan grup whatsapp",
+        "disable": "Berhasil menonaktifkan {{@CMD}}, bot tidak lagi menendang anggota grup yang mengirim tautan grup whatsapp"
+      },
+      "antiviewonce": {
+        "enable": "Berhasil mengaktifkan {{@CMD}}, bot akan mengirim ulang pesan yang dikirim sebagai tampilan sekali",
+        "disable": "Berhasil menonaktifkan {{@CMD}}, bot tidak lagi mengirim ulang pesan yang dikirim sebagai tampilan sekali"
+      },
+      "change-description": "{{@ADM}} mengubah deskripsi grup menjadi",
+      "change-name": "{{@ADM}} mengubah judul grup menjadi",
+      "change-picture": "{{@ADM}} telah mengubah profil grup",
+      "group-add": {
+        "caption": "Undangan untuk bergabung dengan grup WhatsApp saya",
+        "add": "Berhasil menambahkan {{@NUM}} ke grup",
+        "invite": "Berhasil mengundang {{@NUM}} ke grup"
+      },
+      "group-demote": "Berhasil menurunkan jabatan {{@ADM}} untuk menjadi member",
+      "group-kick": {
+        "success": "Berhasil mengeluarkan {{@NUM}} dari grup",
+        "failed": "{{@NUM}} tidak terdapat dalam grup"
+      },
+      "group-language": "Kamu dapat mengubah bahasa grup saat berinteraksi dengan aku, berikut beberapa bahasa yang didukung",
+      "group-mute": {
+        "enable": "Berhasil mengaktifkan {{@CMD}}, bot tidak akan merespons perintah selanjutnya di grup ini",
+        "disable": "Berhasil menonaktifkan {{@CMD}}, bot akan merespons perintah selanjutnya di grup ini"
+      },
+      "group-notify": {
+        "enable": "Berhasil mengaktifkan {{@CMD}}, bot akan mengirimkan pesan ketika ada update di grup",
+        "disable": "Berhasil menonaktifkan {{@CMD}}, bot tidak lagi mengirimkan pesan ketika ada update di grup"
+      },
+      "group-promote": "Berhasil mempromosikan {{@ADM}} untuk menjadi admin",
+      "group-url": "URL grup: {{@URL}}",
+      "member-leave": {
+        "enable": "Berhasil mengaktifkan {{@CMD}}, bot akan mengirimkan pesan selamat tinggal saat ada peserta yang keluar dari grup",
+        "disable": "Berhasil menonaktifkan {{@CMD}}, bot tidak lagi mengirim pesan selamat tinggal saat ada peserta yang keluar dari grup"
+      },
+      "member-welcome": {
+        "enable": "Berhasil mengaktifkan {{@CMD}}, bot akan mengirimkan pesan selamat datang saat ada peserta baru yang bergabung ke grup",
+        "disable": "Berhasil menonaktifkan {{@CMD}}, bot tidak lagi mengirim pesan selamat datang saat ada peserta baru yang bergabung ke grup"
       }
+    },
+    "owner": {
+      "bot-desc": "Berhasil mengubah description profil bot",
+      "bot-name": "Berhasil mengubah nama profil bot",
+      "bot-picture": "Berhasil mengubah gambar profil bot"
     }
   }
 }

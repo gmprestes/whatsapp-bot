@@ -1,6 +1,5 @@
-import { WAMessage } from "@adiwajshing/baileys"
-import WAClient from "../../../libs/whatsapp"
-import { database } from "../../whatsapp"
+import { WAMessage } from "baileys"
+import WAClient, { database } from "../../../libs/whatsapp"
 import type { MessageSerialize } from "../../../types/serialize"
 
 export const message = async (aruga: WAClient, msg: WAMessage): Promise<MessageSerialize> => {
@@ -21,33 +20,34 @@ export const message = async (aruga: WAClient, msg: WAMessage): Promise<MessageS
   if (m.message) {
     m.key = msg.key
     m.id = m.key.id
-    m.isBotMsg = (m.id.startsWith("BAE5") && m.id.length === 16) || (m.id.startsWith("3EB0") && m.key.id.length === 12) || (m.id.startsWith("ARUGAZ") && m.id.length === 18)
+    m.isBotMsg = (m.id.startsWith("BAE5") && m.id.length === 16) || (m.id.startsWith("3EB0") && m.key.id.length === 12) || (m.id.startsWith("ARUGAZ") && m.id.length === 20)
     m.isGroupMsg = m.key.remoteJid.endsWith("g.us")
     m.from = aruga.decodeJid(m.key.remoteJid)
     m.fromMe = m.key.fromMe
-    m.type = Object.keys(m.message).find((x) => x !== "senderKeyDistributionMessage" && x !== "messageContextInfo" && x !== "inviteLinkGroupTypeV2")
+    m.type = Object.keys(m.message).find((type) => type !== "senderKeyDistributionMessage" && type !== "messageContextInfo")
     m.sender = aruga.decodeJid(m.fromMe ? aruga.user.id : m.isGroupMsg || m.from === "status@broadcast" ? m.key.participant || msg.participant : m.from)
     m.key.participant = !m.key.participant || m.key.participant === "status_me" ? m.sender : m.key.participant
-    m.body =
-      m.message.conversation && m.type === "conversation"
-        ? m.message.conversation
-        : m.message.extendedTextMessage && m.type === "extendedTextMessage"
-        ? m.message.extendedTextMessage.text
-        : m.message.imageMessage && m.type === "imageMessage"
-        ? m.message.imageMessage.caption
-        : m.message.videoMessage && m.type === "videoMessage"
-        ? m.message.videoMessage.caption
-        : m.message.documentMessage && m.type === "documentMessage"
-        ? m.message.documentMessage.caption
-        : m.message.buttonsResponseMessage && m.type === "buttonsResponseMessage"
-        ? m.message.buttonsResponseMessage.selectedButtonId
-        : m.message.listResponseMessage && m.type === "listResponseMessage"
-        ? m.message.listResponseMessage.singleSelectReply.selectedRowId
-        : m.message.templateButtonReplyMessage && m.type === "templateButtonReplyMessage"
-        ? m.message.templateButtonReplyMessage.selectedId
-        : m.message.reactionMessage && m.type === "reactionMessage"
-        ? m.message.reactionMessage.text
-        : ""
+    m.body = m.message.conversation
+      ? m.message.conversation
+      : m.message.extendedTextMessage
+      ? m.message.extendedTextMessage.text
+      : m.message.imageMessage
+      ? m.message.imageMessage.caption
+      : m.message.videoMessage
+      ? m.message.videoMessage.caption
+      : m.message.documentMessage
+      ? m.message.documentMessage.caption
+      : m.message.buttonsResponseMessage
+      ? m.message.buttonsResponseMessage.selectedButtonId
+      : m.message.listResponseMessage
+      ? m.message.listResponseMessage.singleSelectReply.selectedRowId
+      : m.message.templateButtonReplyMessage
+      ? m.message.templateButtonReplyMessage.selectedId
+      : m.message.reactionMessage
+      ? m.message.reactionMessage.text
+      : m.message.locationMessage
+      ? m.message.locationMessage.comment
+      : ""
     m.mentions = m.message[m.type]?.contextInfo?.mentionedJid || []
     m.viewOnce = !!msg.message?.viewOnceMessage || !!msg.message?.viewOnceMessageV2 || !!msg.message?.viewOnceMessageV2Extension
     function reply(text: string, quoted = false) {
@@ -61,16 +61,13 @@ export const message = async (aruga: WAClient, msg: WAMessage): Promise<MessageS
       )
     }
     m.reply = reply
-    function resend(jid = m.from, opts: unknown) {
-      return aruga.resendMessage(jid, m, opts)
-    }
-    m.resend = resend
   }
 
   m.timestamps = (typeof msg.messageTimestamp === "number" ? msg.messageTimestamp : msg.messageTimestamp.low ? msg.messageTimestamp.low : msg.messageTimestamp.high) * 1000 || Date.now()
   m.expiration = m.message[m.type]?.contextInfo?.expiration || 0
-  m.pushname = msg.pushName || "unknown"
-  m.groupMetadata = m.type !== "stickerMessage" && m.isGroupMsg && ((await database.getGroupMetadata(m.from)) ?? (await database.createGroupMetadata(m.from, (await aruga.groupMetadata(m.from)) as unknown)))
+  m.pushname = msg.pushName || "anonymous"
+  m.status = msg.status || 0
+  m.groupMetadata = m.isGroupMsg && ((await database.getGroupMetadata(m.from)) ?? (await database.createGroupMetadata(m.from, (await aruga.groupMetadata(m.from)) as unknown)))
 
   m.quoted = <MessageSerialize>{}
   m.quoted.message = m.message[m.type]?.contextInfo?.quotedMessage
@@ -96,32 +93,34 @@ export const message = async (aruga: WAClient, msg: WAMessage): Promise<MessageS
       id: m.message[m.type].contextInfo.stanzaId
     }
     m.quoted.id = m.quoted.key.id
-    m.quoted.isBotMsg = (m.quoted.id.startsWith("BAE5") && m.quoted.id.length === 16) || (m.id.startsWith("3EB0") && m.key.id.length === 12) || (m.quoted.id.startsWith("ARUGAZ") && m.quoted.id.length === 18)
+    m.quoted.isBotMsg = (m.quoted.id.startsWith("BAE5") && m.quoted.id.length === 16) || (m.id.startsWith("3EB0") && m.key.id.length === 12) || (m.quoted.id.startsWith("ARUGAZ") && m.quoted.id.length === 20)
     m.quoted.isGroupMsg = m.quoted.key.remoteJid.endsWith("g.us")
     m.quoted.from = aruga.decodeJid(m.quoted.key.remoteJid)
     m.quoted.fromMe = m.quoted.key.fromMe
-    m.quoted.type = Object.keys(m.quoted.message).find((x) => x !== "senderKeyDistributionMessage" && x !== "messageContextInfo" && x !== "inviteLinkGroupTypeV2")
+    m.quoted.type = Object.keys(m.quoted.message).find((type) => type !== "senderKeyDistributionMessage" && type !== "messageContextInfo")
     m.quoted.sender = m.quoted.key.participant
-    m.quoted.body =
-      m.quoted.message.conversation && m.quoted.type === "conversation"
-        ? m.quoted.message.conversation
-        : m.quoted.message.extendedTextMessage && m.quoted.type === "extendedTextMessage"
-        ? m.quoted.message.extendedTextMessage.text
-        : m.quoted.message.imageMessage && m.quoted.type === "imageMessage"
-        ? m.quoted.message.imageMessage.caption
-        : m.quoted.message.videoMessage && m.quoted.type === "videoMessage"
-        ? m.quoted.message.videoMessage.caption
-        : m.quoted.message.documentMessage && m.quoted.type === "documentMessage"
-        ? m.quoted.message.documentMessage.caption
-        : m.quoted.message.buttonsResponseMessage && m.quoted.type === "buttonsResponseMessage"
-        ? m.quoted.message.buttonsResponseMessage.selectedButtonId
-        : m.quoted.message.listResponseMessage && m.quoted.type === "listResponseMessage"
-        ? m.quoted.message.listResponseMessage.singleSelectReply.selectedRowId
-        : m.quoted.message.templateButtonReplyMessage && m.quoted.type === "templateButtonReplyMessage"
-        ? m.quoted.message.templateButtonReplyMessage.selectedId
-        : m.quoted.message.reactionMessage && m.quoted.type === "reactionMessage"
-        ? m.quoted.message.reactionMessage.text
-        : ""
+    m.quoted.key.participant = !m.quoted.key.participant ? m.sender : m.quoted.key.participant
+    m.quoted.body = m.quoted.message.conversation
+      ? m.quoted.message.conversation
+      : m.quoted.message.extendedTextMessage
+      ? m.quoted.message.extendedTextMessage.text
+      : m.quoted.message.imageMessage
+      ? m.quoted.message.imageMessage.caption
+      : m.quoted.message.videoMessage
+      ? m.quoted.message.videoMessage.caption
+      : m.quoted.message.documentMessage
+      ? m.quoted.message.documentMessage.caption
+      : m.quoted.message.buttonsResponseMessage
+      ? m.quoted.message.buttonsResponseMessage.selectedButtonId
+      : m.quoted.message.listResponseMessage
+      ? m.quoted.message.listResponseMessage.singleSelectReply.selectedRowId
+      : m.quoted.message.templateButtonReplyMessage
+      ? m.quoted.message.templateButtonReplyMessage.selectedId
+      : m.quoted.message.reactionMessage
+      ? m.quoted.message.reactionMessage.text
+      : m.quoted.message.locationMessage
+      ? m.quoted.message.locationMessage.comment
+      : ""
     m.quoted.mentions = m.quoted.message[m.quoted.type]?.contextInfo?.mentionedJid || []
     m.quoted.viewOnce = !!m.message[m.type].contextInfo.quotedMessage?.viewOnceMessage || !!m.message[m.type].contextInfo.quotedMessage?.viewOnceMessageV2 || !!m.message[m.type].contextInfo.quotedMessage?.viewOnceMessageV2Extension
     function reply(text: string, quoted = false) {
@@ -135,10 +134,6 @@ export const message = async (aruga: WAClient, msg: WAMessage): Promise<MessageS
       )
     }
     m.quoted.reply = reply
-    function resend(jid = m.from, opts: unknown) {
-      return aruga.resendMessage(jid, m.quoted, opts)
-    }
-    m.quoted.resend = resend
   } else m.quoted = null
 
   return m

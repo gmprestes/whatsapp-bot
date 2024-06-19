@@ -1,4 +1,7 @@
 {
+  "default": {
+    "onWhatsApp": "{{@NUM}} not registered on whatsapp"
+  },
   "handlers": {
     "call": {
       "reject": "Sorry, I can't take calls!",
@@ -6,7 +9,9 @@
       "ban": "Sorry, I will ban you!"
     },
     "group-participant": {
+      "welcome": "Hello {{@PPL}} 👋, Thank you so much for joining {{@GRP}} as one of our newest members. It's a pleasure to welcome you to our group!",
       "anticountry": "Sorry {{@PPL}}, this group is prohibited for phone numbers with the prefix {{@NUM}}",
+      "leave": "It was an honor to meet with a {{@PPL}}. You deserve nothing but the best! Good bye 👋",
       "promote": "{{@ADM}} has promoted {{@PPL}} become admins group",
       "demote": "{{@ADM}} has demoted {{@PPL}} become members group"
     },
@@ -14,7 +19,7 @@
       "subject": "{{@PPL}} has changed the group name to {{@TTL}}",
       "icon": {
         "change": "{{@PPL}} has changed the group profile picture",
-        "remove": "{{@PPL}} has removed the group Profile picture"
+        "remove": "{{@PPL}} has removed the group profile picture"
       },
       "invite_link": "{{@PPL}} has updated the group URL",
       "description": "{{@PPL}} has updated the group description to {{@TTL}}",
@@ -47,11 +52,13 @@
   },
   "commands": {
     "general": {
+      "didyoumean": {
+        "title": "The command you typed is not listed, maybe this is what you mean:",
+        "same": "similarity"
+      },
       "language": {
         "changed": "Language has been changed to {{@LANGUAGE}}!",
-        "title": "Language support",
-        "text": "You can change your language when interacting with me, here are some supported languages",
-        "buttonText": "LIST LANGUAGES"
+        "text": "You can change your language when interacting with me, here are some supported languages"
       },
       "menu": {
         "cmd": {
@@ -85,8 +92,7 @@
           "two": "in private chats",
           "three": "by typing {{@COMMANDS}}"
         },
-        "bottom": "The following are some of the features found in the bot.",
-        "buttonText": "LIST MENU"
+        "bottom": "The following are some of the features found in the bot."
       }
     },
     "group": {
@@ -101,7 +107,52 @@
           "numList": "List of country code in the group: {{@NUM}}"
         },
         "list": "List of all available country codes based on {{@URL}}"
+      },
+      "antilink": {
+        "enable": "Successfully activate {{@CMD}}, bot will kick group member that send whatsapp group link",
+        "disable": "Successfully deactivate {{@CMD}}, bot no longer kick group members that send whatsapp group link"
+      },
+      "antiviewonce": {
+        "enable": "Successfully activate {{@CMD}}, bot will resend messages that send as view once",
+        "disable": "Successfully deactivate {{@CMD}}, bot no longer resend messages that send as view once"
+      },
+      "change-description": "{{@ADM}} changed the group description to",
+      "change-name": "{{@ADM}} changed the group title to",
+      "change-picture": "{{@ADM}} has changed the group profile",
+      "group-add": {
+        "caption": "Invitation to join my WhatsApp group",
+        "add": "Successfully added {{@NUM}} to the group",
+        "invite": "Successfully invited {{@NUM}} to the group"
+      },
+      "group-demote": "Successfully demoted {{@ADM}} to become a member",
+      "group-kick": {
+        "success": "Successfully removed {{@NUM}} from the group",
+        "failed": "{{@NUM}} does not exist in the group"
+      },
+      "group-language": "You can change the group's language when interacting with me, here are some supported languages",
+      "group-mute": {
+        "enable": "Successfully activated {{@CMD}}, bot will not respond to future commands in this group",
+        "disable": "Successfully activated {{@CMD}}, bot will respond to future commands in this group"
+      },
+      "group-notify": {
+        "enable": "Successfully activate {{@CMD}}, bot will send a message when there is an update on the group",
+        "disable": "Successfully deactivated {{@CMD}}, bot no longer send a message when there is an update on the group"
+      },
+      "group-promote": "Successfully promote {{@ADM}} to become an admin",
+      "group-url": "Group URL: {{@URL}}",
+      "member-leave": {
+        "enable": "Successfully activate {{@CMD}}, bot will send a goodbye message when a participant leaves the group",
+        "disable": "Successfully deactivated {{@CMD}}, bot no longer sends goodbye messages when a participant leaves the group"
+      },
+      "member-welcome": {
+        "enable": "Successfully activate {{@CMD}}, bot will send a welcome message when a new participant join the group",
+        "disable": "Successfully deactivate {{@CMD}}, bot no send a welcome message when a new participant join the group"
       }
+    },
+    "owner": {
+      "bot-desc": "Successfully change bot profile description",
+      "bot-name": "Successfully change bot profile name",
+      "bot-picture": "Successfully change bot profile picture"
     }
   }
 }

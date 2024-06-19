@@ -1,9 +1,9 @@
-import type { Group } from "@prisma/client"
+import type { Prisma, Group } from "@prisma/client"
 import NodeCache from "node-cache"
 import Database from "../../../libs/database"
 import config from "../../../utils/config"
 
-const group = new NodeCache({
+export const group = new NodeCache({
   stdTTL: 60 * 10, // 10 mins
   useClones: false
 })
@@ -19,6 +19,16 @@ export const getGroup = async (groupId: string) => {
     if (groupData) group.set(groupId, groupData)
 
     return groupData
+  } catch {
+    return null
+  }
+}
+
+export const getGroups = async (opts?: Prisma.GroupFindManyArgs) => {
+  try {
+    const groups = await Database.group.findMany(opts)
+
+    return groups
   } catch {
     return null
   }

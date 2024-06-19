@@ -1,3 +1,20 @@
+declare type UserConfig = {
+  /**
+   * Set a default limit
+   * @type {number}
+   * @example
+   * limit: 30
+   */
+  limit: number
+  /**
+   * Set a default expired in a day
+   * @type {number}
+   * @example
+   * expires: 30 // 30 days
+   */
+  expires: number
+}
+
 declare type Config = {
   /**
    * Set a default timezone
@@ -61,16 +78,6 @@ declare type Config = {
      */
     ban: boolean
   }
-  /** User config */
-  user: {
-    /**
-     * Set a default limit for every user
-     * @type {number}
-     * @example
-     * limit: 30
-     */
-    limit: number
-  }
   /**
    * Set a default prefix of bot! u can fill '#@' for double prefix or as much as you want '!@#$%^&/.'
    * @type {string}
@@ -92,4 +99,16 @@ declare type Config = {
    * footer: "@arugaz"
    */
   footer: string
+  /**
+   * Should the bot as the owner of the bot
+   * @example
+   * self: true
+   */
+  self: boolean
+  /** User config */
+  user: {
+    basic: UserConfig
+    premium: UserConfig
+    vip: UserConfig
+  }
 }
