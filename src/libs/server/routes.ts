@@ -36,10 +36,10 @@ export const whatsappRoutes = (fastify: FastifyInstance, aruga: WAClient) => {
             throw new Error("Client not ready")
           }
 
-          await aruga.sendMessage(number.replace(/[^0-9]/g, "") + "@s.whatsapp.net", { text: message })
+          let msg = await aruga.sendMessage(number.replace(/[^0-9]/g, "") + "@s.whatsapp.net", { text: message })
 
           return reply.send({
-            message: "Succesfully send message",
+            message: msg,
             error: "Success",
             statusCode: 200
           })

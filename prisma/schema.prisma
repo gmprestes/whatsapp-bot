@@ -176,6 +176,9 @@ model Message {
 // nick name
   pushname String?
 
+  // message info
+  status Int?
+
 // group metadata info
   groupMetadata Json?
 

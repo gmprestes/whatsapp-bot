@@ -1,6 +1,5 @@
 import { inspect } from "util"
 
-import cfonts from "cfonts"
 import qrcode from "qrcode"
 import NodeCache from "node-cache"
 
@@ -15,12 +14,6 @@ import * as groupParticipantHandler from "./handlers/group-participant"
 import * as messageHandler from "./handlers/message"
 
 import { resetUserLimit, resetUserRole } from "./utils/cron"
-
-
-import express from 'express';
-import os from 'os';
-
-import { database } from "./libs/whatsapp"
 
 /** Initial Server */
 const fastify = fastifyServer({
@@ -116,13 +109,13 @@ setImmediate(async () => {
 
     process.nextTick(
       () =>
-        messageHandler
-          .registerCommand("commands")
-          .then((size) => aruga.log(`Success Register ${size} commands`))
-          .catch((err) => {
-            aruga.log(inspect(err, true), "error")
-            clearProcess()
-          }),
+        // messageHandler
+        //   .registerCommand("commands")
+        //   .then((size) => aruga.log(`Success Register ${size} commands`))
+        //   .catch((err) => {
+        //     aruga.log(inspect(err, true), "error")
+        //     clearProcess()
+        //   }),
       fastify
         .listen({ host: "127.0.0.1", port: process.env.PORT || 3000 })
         .then((address) => aruga.log(`Server run on ${address}`))
@@ -134,67 +127,67 @@ setImmediate(async () => {
     )
 
     // logs <3
-    cfonts.say("Whatsapp Bot", {
-      align: "center",
-      colors: ["#8cf57b" as HexColor],
-      font: "block",
-      space: false
-    })
-    cfonts.say("By @gmprestes =)", {
-      align: "center",
-      font: "console",
-      gradient: ["red", "#ee82f8" as HexColor]
-    })
-    cfonts.say("O Sangue de Jesus tem poder", {
-      align: "center",
-      font: "tiny",
-      gradient: ["red", "#ee82f8" as HexColor]
-    })
+    // cfonts.say("Whatsapp Bot", {
+    //   align: "center",
+    //   colors: ["#8cf57b" as HexColor],
+    //   font: "block",
+    //   space: false
+    // })
+    // cfonts.say("By @gmprestes =)", {
+    //   align: "center",
+    //   font: "console",
+    //   gradient: ["red", "#ee82f8" as HexColor]
+    // })
+    // cfonts.say("O Sangue de Jesus tem poder", {
+    //   align: "center",
+    //   font: "tiny",
+    //   gradient: ["red", "#ee82f8" as HexColor]
+    // })
   } catch (err: unknown) {
     aruga.log(inspect(err, true), "error")
     clearProcess()
   }
 })
 
-const port = process.env.NODE_PORT || 3000;
-const app = express();
-const router = express.Router();
+// const port = process.env.NODE_PORT || 3000;
+// const app = express();
+// const router = express.Router();
 
-const api_token = process.env.API_TOKEN || ((Math.random() + 1).toString(36).substring(7));
-const authMiddleware = (req, res, next) => {
-  const token = req.headers["authorization"].replace(/^Bearer\s/, '').replace(/^bearer\s/, '');
-  if (token === api_token)
-    next();
-  else
-    res.status(403).end();
-};
+// const api_token = process.env.API_TOKEN || ((Math.random() + 1).toString(36).substring(7));
+// const authMiddleware = (req, res, next) => {
+//   const token = req.headers["authorization"].replace(/^Bearer\s/, '').replace(/^bearer\s/, '');
+//   if (token === api_token)
+//     next();
+//   else
+//     res.status(403).end();
+// };
 
-router.get('/ping', async (req, res) => {
-  res.end(`PONG`);
-  // console.log(os.cpus());
-  // console.log(os.totalmem());
-  // console.log(os.freemem())
+// router.get('/ping', async (req, res) => {
+//   res.end(`PONG`);
+//   // console.log(os.cpus());
+//   // console.log(os.totalmem());
+//   // console.log(os.freemem())
 
-  // res.end(`PONG \n CPU: ${os.cpus().length} | RAM: ${(os.totalmem()/1024)/1024} | Free RAM: ${(os.freemem()/1024)}`);
-});
+//   //res.end(`PONG \n CPU: ${os.cpus().length} | RAM: ${(os.totalmem()/1024)/1024} | Free RAM: ${(os.freemem()/1024)}`);
+// });
 
-router.post('/message', authMiddleware, async (req, res) => {
-  const { message, to } = req.body;
-  const msg = (await aruga.sendMessage(to.endsWith('@s.whatsapp.net') ? to : `${to}@s.whatsapp.net`, { text: message }));
-  res.end(JSON.stringify({ count: 1, type: 'message', data: msg }));
-});
+// router.post('/message', authMiddleware, async (req, res) => {
+//   const { message, to } = req.body;
+//   const msg = (await aruga.sendMessage(to.endsWith('@s.whatsapp.net') ? to : `${to}@s.whatsapp.net`, { text: message }));
+//   res.end(JSON.stringify({ count: 1, type: 'message', data: msg }));
+// });
 
-router.post('/sync', authMiddleware, async (req, res) => {
-  const { time, page } = req.body;
+// router.post('/sync', authMiddleware, async (req, res) => {
+//   const { time, page } = req.body;
 
-  const take = 10;
-  const count = await database.countMessages(time);
-  const itens = await database.findMessages(time, page, take);
+//   const take = 10;
+//   const count = await database.countMessages(time);
+//   const itens = await database.findMessages(time, page, take);
 
-  console.log(count);
+//   console.log(count);
 
-  res.end(JSON.stringify({ count: itens.length, hasmore: (take * page < count), type: 'message-list', data: itens }));
-});
+//   res.end(JSON.stringify({ count: itens.length, hasmore: (take * page < count), type: 'message-list', data: itens }));
+// });
 
 
 // router.get('/message/:message', authMiddleware, async (req, res) => {
@@ -255,12 +248,12 @@ router.post('/sync', authMiddleware, async (req, res) => {
 //   res.end('OK --> ' + req.params.message);
 // });
 
-app.use(express.json());
-app.use('/api', router);
-app.listen(port, () => {
-  cfonts.say(`Message API listen on port ${port}\n | API TOKEN --> ${api_token}`, {
-    align: "center",
-    font: "console",
-    gradient: ["red", "#ee82f8" as HexColor]
-  })
-});
+// app.use(express.json());
+// app.use('/api', router);
+// app.listen(port, () => {
+//   cfonts.say(`Message API listen on port ${port}\n | API TOKEN --> ${api_token}`, {
+//     align: "center",
+//     font: "console",
+//     gradient: ["red", "#ee82f8" as HexColor]
+//   })
+// });

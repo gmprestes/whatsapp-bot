@@ -14,7 +14,7 @@ const fastifyServer = (fastifyOpts?: FastifyServerOptions) => {
      */
     .get("/", () => {
       return {
-        message: "Hello world!",
+        message: "Online!",
         error: "Success",
         statusCode: 200
       }
@@ -25,6 +25,13 @@ const fastifyServer = (fastifyOpts?: FastifyServerOptions) => {
     .get("/healthcheck", () => {
       return {
         message: "I'm healthy!",
+        error: "Success",
+        statusCode: 200
+      }
+    })
+    .get("/ping", () => {
+      return {
+        message: "PONG!",
         error: "Success",
         statusCode: 200
       }

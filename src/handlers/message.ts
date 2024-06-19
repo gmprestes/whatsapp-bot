@@ -183,7 +183,9 @@ export const execute = async (aruga: WAClient, message: MessageSerialize): Promi
 
   let msg = await getMessage(message.id);
   if (!msg) {
-    const {id, reply, resend, ...cast} = message;
+    //const {id, reply, resend, ...cast} = message;
+    const {id, reply,  ...cast} = message;
+
     msg = (await createMessage(message.id, (cast as unknown) as Message));
   }
   console.log('MSG --> ', msg)
