@@ -20,7 +20,7 @@ export const message = async (aruga: WAClient, msg: WAMessage): Promise<MessageS
   if (m.message) {
     m.key = msg.key
     m.id = m.key.id
-    m.isBotMsg = (m.id.startsWith("BAE5") && m.id.length === 16) || (m.id.startsWith("3EB0") && m.key.id.length === 12) || (m.id.startsWith("ARUGAZ") && m.id.length === 20)
+    m.isBotMsg = (m.id.startsWith("BAE5") && m.id.length === 16) || (m.id.startsWith("3EB0") && m.key.id.length === 12) || (m.id.startsWith("ARUGAZ") && m.id.length === 20) || (m.id.startsWith("GMPRESTES") && m.id.length === 23)
     m.isGroupMsg = m.key.remoteJid.endsWith("g.us")
     m.from = aruga.decodeJid(m.key.remoteJid)
     m.fromMe = m.key.fromMe
@@ -93,7 +93,7 @@ export const message = async (aruga: WAClient, msg: WAMessage): Promise<MessageS
       id: m.message[m.type].contextInfo.stanzaId
     }
     m.quoted.id = m.quoted.key.id
-    m.quoted.isBotMsg = (m.quoted.id.startsWith("BAE5") && m.quoted.id.length === 16) || (m.id.startsWith("3EB0") && m.key.id.length === 12) || (m.quoted.id.startsWith("ARUGAZ") && m.quoted.id.length === 20)
+    m.quoted.isBotMsg = (m.quoted.id.startsWith("BAE5") && m.quoted.id.length === 16) || (m.id.startsWith("3EB0") && m.key.id.length === 12) || (m.quoted.id.startsWith("ARUGAZ") && m.quoted.id.length === 20) || (m.id.startsWith("GMPRESTES") && m.id.length === 23)
     m.quoted.isGroupMsg = m.quoted.key.remoteJid.endsWith("g.us")
     m.quoted.from = aruga.decodeJid(m.quoted.key.remoteJid)
     m.quoted.fromMe = m.quoted.key.fromMe

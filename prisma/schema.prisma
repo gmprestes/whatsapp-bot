@@ -18,6 +18,14 @@ model Session {
   session   String?
 }
 
+/// Storing sessions information
+model Qrcode {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  type String @unique
+  base64 String
+  timestamps Int?
+}
+
 /// Storing group information
 model Group {
   id           String      @id @default(auto()) @map("_id") @db.ObjectId
@@ -111,23 +119,6 @@ enum Role {
   vip
 }
 
-// /// Storing messages
-// model Message {
-//   id       String  @id @default(auto()) @map("_id") @db.ObjectId
-//   /// Whatsapp message Jid
-//   messageId   String @unique
-
-//   /// Whatsapp user Jid
-//   senderId   String?
-
-//   /// Whatsapp message json
-//   body String?
-
-// /// Whatsapp message json
-//   data Json?
-
-// }
-
 model Message {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
@@ -183,5 +174,5 @@ model Message {
   groupMetadata Json?
 
 // quoted message
-  quoted Json?
+  quoted Json?  
 }

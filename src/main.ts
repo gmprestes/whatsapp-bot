@@ -14,6 +14,7 @@ import * as groupParticipantHandler from "./handlers/group-participant"
 import * as messageHandler from "./handlers/message"
 
 import { resetUserLimit, resetUserRole } from "./utils/cron"
+import { time } from "console"
 
 /** Initial Server */
 const fastify = fastifyServer({
@@ -38,48 +39,68 @@ const aruga = new WAClient({
   })
 })
 
-/** Handler Event */
-;(() => {
-  // handle call event
-  aruga.on("call", (call) =>
-    serialize
-      .call(aruga, call)
-      .then((call) => callHandler.execute(aruga, call).catch(() => void 0))
-      .catch(() => void 0)
-  )
+  /** Handler Event */
+  ; (() => {
+    // handle call event
+    aruga.on("call", (call) =>
+      serialize
+        .call(aruga, call)
+        .then((call) => callHandler.execute(aruga, call).catch(() => void 0))
+        .catch(() => void 0)
+    )
 
-  // handle group event
-  aruga.on("group", (message) =>
-    serialize
-      .group(aruga, message)
-      .then((message) => groupHandler.execute(aruga, message).catch(() => void 0))
-      .catch(() => void 0)
-  )
+    // handle group event
+    aruga.on("group", (message) =>
+      serialize
+        .group(aruga, message)
+        .then((message) => groupHandler.execute(aruga, message).catch(() => void 0))
+        .catch(() => void 0)
+    )
 
-  // handle group participants event
-  aruga.on("group.participant", (message) =>
-    serialize
-      .groupParticipant(aruga, message)
-      .then((message) => groupParticipantHandler.execute(aruga, message).catch(() => void 0))
-      .catch(() => void 0)
-  )
+    // handle group participants event
+    aruga.on("group.participant", (message) =>
+      serialize
+        .groupParticipant(aruga, message)
+        .then((message) => groupParticipantHandler.execute(aruga, message).catch(() => void 0))
+        .catch(() => void 0)
+    )
 
-  // handle message event
-  aruga.on("message", (message) =>
-    serialize
-      .message(aruga, message)
-      .then((message) => messageHandler.execute(aruga, message).catch(() => void 0))
-      .catch(() => void 0)
-  )
+    // handle message event
+    aruga.on("message", (message) =>
+      serialize
+        .message(aruga, message)
+        .then((message) => messageHandler.execute(aruga, message).catch(() => void 0))
+        .catch(() => void 0)
+    )
 
-  // handle qr code event
-  aruga.on("qr", (qrCode) =>
-    qrcode
-      .toString(qrCode, { type: "terminal", small: true })
-      .then((qrResult) => console.log(qrResult))
-      .catch(() => void 0)
-  )
-})()
+    // handle qr code event
+    aruga.on("qr", (qrCode) =>
+      qrcode
+        .toDataURL(qrCode)
+        .then( async (base64) => {
+          
+          await Database.qrcode.upsert({
+            where: {type: 'image/png' },
+            update: {
+              base64,
+              type: 'image/png',
+              timestamps: Date.now()
+            },
+            create: {
+              base64,
+              type: 'image/png',
+              timestamps: Date.now()
+            },
+          })
+
+        })
+
+        //.toString(qrCode, { type: "terminal", small: true })
+        //.then((qrResult) => console.log(qrResult))
+
+        .catch(() => void 0)
+    )
+  })()
 
 /** Pretty Sexy :D */
 const clearProcess = async () => {
@@ -116,13 +137,13 @@ setImmediate(async () => {
         //     aruga.log(inspect(err, true), "error")
         //     clearProcess()
         //   }),
-      fastify
-        .listen({ host: "127.0.0.1", port: process.env.PORT || 3000 })
-        .then((address) => aruga.log(`Server run on ${address}`))
-        .catch((err) => {
-          aruga.log(inspect(err, true), "error")
-          clearProcess()
-        }),
+        fastify
+          .listen({ host: "127.0.0.1", port: process.env.PORT || 3000 })
+          .then((address) => aruga.log(`Server run on ${address}`))
+          .catch((err) => {
+            aruga.log(inspect(err, true), "error")
+            clearProcess()
+          }),
       i18nInit()
     )
 

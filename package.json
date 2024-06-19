@@ -14,7 +14,7 @@
     "start": "node ./dist/main.js",
     "start:pm2": "pm2 start ecosystem.config.js && pm2 save && pm2 logs whatsappbot --raw"
   },
-  "author": "arugaz",
+  "author": "gmprestes",
   "repository": {
     "type": "git",
     "url": "https://github.com/ArugaZ/whatsapp-bot.git"

@@ -1,8 +1,8 @@
  {
-  "timeZone": "Asia/Jakarta",
+  "timeZone": "America/Sao_Paulo",
 
   "language": "pt",
-  "ownerNumber": ["5551998904515"],
+  "ownerNumber": [""],
   "readStatus": false,
   "readMessage": false,
   "antiCall": {
@@ -11,8 +11,8 @@
     "ban": false
   },
   "prefix": "!#.",
-  "name": "gmprestes",
-  "footer": "gmprestes/whatsapp-bot",
+  "name": "",
+  "footer": "",
   "self": true,
   "user": {
     "basic": {

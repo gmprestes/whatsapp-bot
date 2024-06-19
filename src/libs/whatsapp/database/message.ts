@@ -1,6 +1,6 @@
 import type { Message } from "@prisma/client"
 import NodeCache from "node-cache"
-import { database } from ".."
+// import { database } from ".."
 import Database from "../../../libs/database"
 //import config from "../../../utils/config"
 
@@ -25,8 +25,9 @@ export const getMessage = async (messageId: string) => {
   }
 }
 
-export const createMessage = async (messageId: string, metadata: Partial<Omit<Message, "id" | "messageId">>) => {
+export const createMessage = async (messageId: string, metadata: Partial<Omit<Message, "id" | "messageId" | "reply">>) => {
   try {
+
     if (message.has(messageId)) return message.get(messageId) as Message
 
     const messageData = await Database.message.create({
@@ -46,11 +47,11 @@ export const createMessage = async (messageId: string, metadata: Partial<Omit<Me
   }
 }
 
-export const updateMessage = async (messageId: string, messageInput: Partial<Omit<Message, "id" | "messageId">>) => {
+export const updateMessage = async (messageId: string, metadata: Partial<Omit<Message, "id" | "messageId" | "reply">>) => {
   try {
     const messageData = await Database.message.update({
       where: { messageId },
-      data: { ...messageInput }
+      data: { ...metadata }
     })
 
     if (messageData) message.set(messageId, messageData)
@@ -60,6 +61,32 @@ export const updateMessage = async (messageId: string, messageInput: Partial<Omi
     return null
   }
 }
+
+export const upsertMessage = async (messageId: string, metadata: Partial<Omit<Message, "id" | "messageId" | "reply">>) => {
+  try {
+
+    const messageData = await Database.message.upsert({
+      where: { messageId },
+      update: {
+        messageId,
+        ...metadata,
+        from: metadata.from ?? ""
+      },
+      create: {
+        messageId,
+        ...metadata,
+        from: metadata.from ?? ""
+      }
+    })
+
+    if (messageData) message.set(messageId, messageData)
+
+    return messageData
+  } catch {
+    return null
+  }
+}
+
 
 export const deleteMessage = async (messageId: string) => {
   try {
@@ -71,7 +98,7 @@ export const deleteMessage = async (messageId: string) => {
   }
 }
 
-export const findMessages = async (lastTimestamps: number, page?: number, take? : number) => {
+export const findMessages = async (lastTimestamps: number, page?: number, take?: number) => {
   try {
 
     page = page || 1;

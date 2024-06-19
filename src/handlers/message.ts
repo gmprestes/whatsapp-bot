@@ -43,6 +43,7 @@ const getGroup = database.getGroup
 const createGroup = database.createGroup
 const createMessage = database.createMessage
 const getMessage = database.getMessage
+const upsertMessage = database.upsertMessage
 
 
 export const execute = async (aruga: WAClient, message: MessageSerialize): Promise<unknown> => {
@@ -181,14 +182,28 @@ export const execute = async (aruga: WAClient, message: MessageSerialize): Promi
       .finally(() => aruga.log(`${color.purple("[EXEC]")} ${color.cyan(`$ [${arg.length}]`)} from ${color.blue(message.pushname)} ${message.isGroupMsg ? `in ${color.blue(message.groupMetadata.subject || "unknown")}` : ""}`.trim(), "info", message.timestamps))
   }
 
-  let msg = await getMessage(message.id);
-  if (!msg) {
-    //const {id, reply, resend, ...cast} = message;
-    const {id, reply,  ...cast} = message;
+  // busca no cache
+  // let msg = await getMessage(message.id);
+  // if (!msg) {
+  //   //const {id, reply, resend, ...cast} = message;
 
-    msg = (await createMessage(message.id, (cast as unknown) as Message));
-  }
-  console.log('MSG --> ', msg)
+  //   const { id, reply, ...cast } = message;
+  //   // que gambiarra
+  //   if(cast.quoted)
+  //     delete cast.quoted.reply
+
+  //   msg = (await createMessage(message.id, (cast as unknown) as Message));
+  // }
+
+  const { id, reply, ...cast } = message;
+  // que gambiarra
+  if (cast.quoted)
+    delete cast.quoted.reply
+  //await upsertMessage(message.id, (cast as unknown) as Message);
+
+
+    const msg = await upsertMessage(message.id, (cast as unknown) as Message);
+    console.log('MSG --> ', msg)
 }
 
 export const registerCommand = async (pathname = "commands") => {
