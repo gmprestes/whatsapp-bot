@@ -14,7 +14,6 @@ import * as groupParticipantHandler from "./handlers/group-participant"
 import * as messageHandler from "./handlers/message"
 
 import { resetUserLimit, resetUserRole } from "./utils/cron"
-import { time } from "console"
 
 /** Initial Server */
 const fastify = fastifyServer({
@@ -138,7 +137,7 @@ setImmediate(async () => {
         //     clearProcess()
         //   }),
         fastify
-          .listen({ host: "127.0.0.1", port: process.env.PORT || 3000 })
+          .listen({ host: "0.0.0.0", port: process.env.PORT || 3000 })
           .then((address) => aruga.log(`Server run on ${address}`))
           .catch((err) => {
             aruga.log(inspect(err, true), "error")
