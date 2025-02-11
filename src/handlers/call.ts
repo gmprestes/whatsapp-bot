@@ -12,19 +12,19 @@ export const execute = async (aruga: WAClient, call: CallSerialize): Promise<unk
       if (config.antiCall.reject) {
         await aruga.rejectCall(call.callId, call.callFrom)
 
-        await call.reply(i18n.translate("handlers.call.reject", {}, user.language))
+        //await call.reply(i18n.translate("handlers.call.reject", {}, user.language))
       }
 
       if (config.antiCall.block) {
         await aruga.updateBlockStatus(call.callFrom, "block")
 
-        await call.reply(i18n.translate("handlers.call.block", {}, user.language))
+        //await call.reply(i18n.translate("handlers.call.block", {}, user.language))
       }
 
       if (config.antiCall.ban) {
         user ? await database.updateUser(call.callFrom, { ban: true }) : await database.createUser(call.callFrom, { name: call.callFrom, ban: true })
 
-        await call.reply(i18n.translate("handlers.call.ban", {}, user.language))
+       // await call.reply(i18n.translate("handlers.call.ban", {}, user.language))
       }
 
       return aruga.log(`${color.hex("#940c9c" as HexColor)("[CALL]")} ${color.cyan(`>> [${call.callId.length}]`)} from ${color.blue(user?.name || call.callFrom)}`.trim(), "info", Date.now())

@@ -1,5 +1,6 @@
 import { FastifyInstance } from "fastify"
-import WAClient from "../../libs/whatsapp"
+import type { Message } from "@prisma/client"
+import WAClient, { database } from "../../libs/whatsapp"
 
 /**
  * This APP Just an example how to use fastify with aruga
@@ -9,25 +10,33 @@ export const whatsappRoutes = (fastify: FastifyInstance, aruga: WAClient) => {
   fastify.register(
     async (instance) => {
       instance.addHook("onRequest", async (request, reply) => {
-        const { secret } = request.query as { secret: string }
-        if (!secret || secret !== process.env.SECRET_API) {
+        const { token } = request.query as { token: string }
+        if (!token || token !== process.env.SECRET_API) {
           reply.code(403)
           throw new Error("Unauthorized access")
         }
       })
 
-      // http://127.0.0.1:PORT/api/status?secret=yoursecret
-      instance.get("/status", () => {
-        return {
-          message: aruga.status,
-          error: "Success",
-          statusCode: 200
+      instance.route({
+        url: "/status",
+        method: "GET",
+        handler: async (request, reply) => {
+          if (aruga.status !== "open") {
+            reply.code(500)
+            throw new Error("Client not ready")
+          }
+          else
+            return {
+              message: aruga.status,
+              statusCode: 200
+            }
         }
       })
 
+
       // http://127.0.0.1:PORT/api/send-message?secret=yoursecret&number=628xxx&message=Hello
       instance.route({
-        url: "/send-message",
+        url: "/message/send",
         method: "GET",
         handler: async (request, reply) => {
           const { number, message } = request.query as { number: string; message: string }
@@ -36,11 +45,46 @@ export const whatsappRoutes = (fastify: FastifyInstance, aruga: WAClient) => {
             throw new Error("Client not ready")
           }
 
-          let msg = await aruga.sendMessage(number.replace(/[^0-9]/g, "") + "@s.whatsapp.net", { text: message })
+          if (number === undefined) {
+            reply.code(400)
+            throw new Error("The Number must be provided");
+          }
+
+          if (message === undefined) {
+            reply.code(400);
+            throw new Error("An Message must be provided");
+          }
+
+          const msg = await aruga.sendMessage(number.replace(/[^0-9]/g, "") + "@s.whatsapp.net", { text: message })
 
           return reply.send({
             message: msg,
-            error: "Success",
+            //error: "Success",
+            statusCode: 200
+          })
+        }
+      })
+
+      instance.route({
+        url: "/message/get",
+        method: "GET",
+        handler: async (request, reply) => {
+          const { messageid } = request.query as { messageid: string; }
+          if (aruga.status !== "open") {
+            reply.code(500)
+            throw new Error("Client not ready")
+          }
+
+          if (messageid === undefined) {
+            reply.code(400)
+            throw new Error("The Message ID must be provided");
+          }
+
+          const msg = await database.getMessage(messageid) as Message;
+
+          return reply.send({
+            message: msg,
+            //error: "Success",
             statusCode: 200
           })
         }

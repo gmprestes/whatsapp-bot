@@ -9,30 +9,10 @@ const fastifyServer = (fastifyOpts?: FastifyServerOptions) => {
   const fastify = Fastify({ ...fastifyOpts })
 
   fastify
-    /**
-     * Hello world!
-     */
-    .get("/", () => {
-      return {
-        message: "Online!",
-        error: "Success",
-        statusCode: 200
-      }
-    })
-    /**
-     * Health check
-     */
-    .get("/healthcheck", () => {
-      return {
-        message: "I'm healthy!",
-        error: "Success",
-        statusCode: 200
-      }
-    })
     .get("/ping", () => {
       return {
-        message: "PONG!",
-        error: "Success",
+        message: "PONG",
+        //error: "Success",
         statusCode: 200
       }
     })
