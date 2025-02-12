@@ -57,6 +57,9 @@ export const whatsappRoutes = (fastify: FastifyInstance, aruga: WAClient) => {
 
           const msg = await aruga.sendMessage(number.replace(/[^0-9]/g, "") + "@s.whatsapp.net", { text: message })
 
+          if (msg.key.id.startsWith("ARUGAZ") && msg.key.id.length === 20)
+            msg.key.id = msg.key.id.replace("ARUGAZ", "GMPRESTES");
+      
           return reply.send({
             message: msg,
             //error: "Success",

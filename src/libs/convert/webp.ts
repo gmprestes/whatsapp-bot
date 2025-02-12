@@ -9,9 +9,9 @@ export const WebpToImage = (webp: Buffer) => {
 }
 
 const defaultStickerOptions: StickerOptions = {
-  author: "arugaz",
+  author: "gmprestes",
   pack: "whatsapp-bot",
-  id: "arugaz",
+  id: "gmprestes",
   width: 256,
   fps: 25,
   loop: true,

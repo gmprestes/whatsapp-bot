@@ -7,19 +7,24 @@ export const message = async (aruga: WAClient, msg: WAMessage): Promise<MessageS
   m.message = msg.message?.viewOnceMessage
     ? msg.message.viewOnceMessage?.message
     : msg.message?.ephemeralMessage
-    ? msg.message.ephemeralMessage?.message
-    : msg.message?.documentWithCaptionMessage
-    ? msg.message.documentWithCaptionMessage?.message
-    : msg.message?.viewOnceMessageV2
-    ? msg.message.viewOnceMessageV2?.message
-    : msg.message?.editedMessage
-    ? msg.message.editedMessage?.message
-    : msg.message?.viewOnceMessageV2Extension
-    ? msg.message.viewOnceMessageV2Extension?.message
-    : msg.message
+      ? msg.message.ephemeralMessage?.message
+      : msg.message?.documentWithCaptionMessage
+        ? msg.message.documentWithCaptionMessage?.message
+        : msg.message?.viewOnceMessageV2
+          ? msg.message.viewOnceMessageV2?.message
+          : msg.message?.editedMessage
+            ? msg.message.editedMessage?.message
+            : msg.message?.viewOnceMessageV2Extension
+              ? msg.message.viewOnceMessageV2Extension?.message
+              : msg.message
   if (m.message) {
+    if (msg.key.id.startsWith("ARUGAZ") && msg.key.id.length === 20)
+      msg.key.id = msg.key.id.replace("ARUGAZ", "GMPRESTES");
+
     m.key = msg.key
+
     m.id = m.key.id
+
     m.isBotMsg = (m.id.startsWith("BAE5") && m.id.length === 16) || (m.id.startsWith("3EB0") && m.key.id.length === 12) || (m.id.startsWith("ARUGAZ") && m.id.length === 20) || (m.id.startsWith("GMPRESTES") && m.id.length === 23)
     m.isGroupMsg = m.key.remoteJid.endsWith("g.us")
     m.from = aruga.decodeJid(m.key.remoteJid)
@@ -30,24 +35,24 @@ export const message = async (aruga: WAClient, msg: WAMessage): Promise<MessageS
     m.body = m.message.conversation
       ? m.message.conversation
       : m.message.extendedTextMessage
-      ? m.message.extendedTextMessage.text
-      : m.message.imageMessage
-      ? m.message.imageMessage.caption
-      : m.message.videoMessage
-      ? m.message.videoMessage.caption
-      : m.message.documentMessage
-      ? m.message.documentMessage.caption
-      : m.message.buttonsResponseMessage
-      ? m.message.buttonsResponseMessage.selectedButtonId
-      : m.message.listResponseMessage
-      ? m.message.listResponseMessage.singleSelectReply.selectedRowId
-      : m.message.templateButtonReplyMessage
-      ? m.message.templateButtonReplyMessage.selectedId
-      : m.message.reactionMessage
-      ? m.message.reactionMessage.text
-      : m.message.locationMessage
-      ? m.message.locationMessage.comment
-      : ""
+        ? m.message.extendedTextMessage.text
+        : m.message.imageMessage
+          ? m.message.imageMessage.caption
+          : m.message.videoMessage
+            ? m.message.videoMessage.caption
+            : m.message.documentMessage
+              ? m.message.documentMessage.caption
+              : m.message.buttonsResponseMessage
+                ? m.message.buttonsResponseMessage.selectedButtonId
+                : m.message.listResponseMessage
+                  ? m.message.listResponseMessage.singleSelectReply.selectedRowId
+                  : m.message.templateButtonReplyMessage
+                    ? m.message.templateButtonReplyMessage.selectedId
+                    : m.message.reactionMessage
+                      ? m.message.reactionMessage.text
+                      : m.message.locationMessage
+                        ? m.message.locationMessage.comment
+                        : ""
     m.mentions = m.message[m.type]?.contextInfo?.mentionedJid || []
     m.viewOnce = !!msg.message?.viewOnceMessage || !!msg.message?.viewOnceMessageV2 || !!msg.message?.viewOnceMessageV2Extension
     function reply(text: string, quoted = false) {
@@ -74,16 +79,16 @@ export const message = async (aruga: WAClient, msg: WAMessage): Promise<MessageS
     ? m.message[m.type].contextInfo.quotedMessage?.viewOnceMessage
       ? m.message[m.type].contextInfo.quotedMessage.viewOnceMessage?.message
       : m.message[m.type].contextInfo.quotedMessage?.ephemeralMessage
-      ? m.message[m.type].contextInfo.quotedMessage.ephemeralMessage?.message
-      : m.message[m.type].contextInfo.quotedMessage?.documentWithCaptionMessage
-      ? m.message[m.type].contextInfo.quotedMessage.documentWithCaptionMessage?.message
-      : m.message[m.type].contextInfo.quotedMessage?.viewOnceMessageV2
-      ? m.message[m.type].contextInfo.quotedMessage.viewOnceMessageV2?.message
-      : m.message[m.type].contextInfo.quotedMessage?.editedMessage
-      ? m.message[m.type].contextInfo.quotedMessage.editedMessage?.message
-      : m.message[m.type].contextInfo.quotedMessage?.viewOnceMessageV2Extension
-      ? m.message[m.type].contextInfo.quotedMessage.viewOnceMessageV2Extension?.message
-      : m.message[m.type].contextInfo.quotedMessage
+        ? m.message[m.type].contextInfo.quotedMessage.ephemeralMessage?.message
+        : m.message[m.type].contextInfo.quotedMessage?.documentWithCaptionMessage
+          ? m.message[m.type].contextInfo.quotedMessage.documentWithCaptionMessage?.message
+          : m.message[m.type].contextInfo.quotedMessage?.viewOnceMessageV2
+            ? m.message[m.type].contextInfo.quotedMessage.viewOnceMessageV2?.message
+            : m.message[m.type].contextInfo.quotedMessage?.editedMessage
+              ? m.message[m.type].contextInfo.quotedMessage.editedMessage?.message
+              : m.message[m.type].contextInfo.quotedMessage?.viewOnceMessageV2Extension
+                ? m.message[m.type].contextInfo.quotedMessage.viewOnceMessageV2Extension?.message
+                : m.message[m.type].contextInfo.quotedMessage
     : null
   if (m.quoted.message) {
     m.quoted.key = {
@@ -103,24 +108,24 @@ export const message = async (aruga: WAClient, msg: WAMessage): Promise<MessageS
     m.quoted.body = m.quoted.message.conversation
       ? m.quoted.message.conversation
       : m.quoted.message.extendedTextMessage
-      ? m.quoted.message.extendedTextMessage.text
-      : m.quoted.message.imageMessage
-      ? m.quoted.message.imageMessage.caption
-      : m.quoted.message.videoMessage
-      ? m.quoted.message.videoMessage.caption
-      : m.quoted.message.documentMessage
-      ? m.quoted.message.documentMessage.caption
-      : m.quoted.message.buttonsResponseMessage
-      ? m.quoted.message.buttonsResponseMessage.selectedButtonId
-      : m.quoted.message.listResponseMessage
-      ? m.quoted.message.listResponseMessage.singleSelectReply.selectedRowId
-      : m.quoted.message.templateButtonReplyMessage
-      ? m.quoted.message.templateButtonReplyMessage.selectedId
-      : m.quoted.message.reactionMessage
-      ? m.quoted.message.reactionMessage.text
-      : m.quoted.message.locationMessage
-      ? m.quoted.message.locationMessage.comment
-      : ""
+        ? m.quoted.message.extendedTextMessage.text
+        : m.quoted.message.imageMessage
+          ? m.quoted.message.imageMessage.caption
+          : m.quoted.message.videoMessage
+            ? m.quoted.message.videoMessage.caption
+            : m.quoted.message.documentMessage
+              ? m.quoted.message.documentMessage.caption
+              : m.quoted.message.buttonsResponseMessage
+                ? m.quoted.message.buttonsResponseMessage.selectedButtonId
+                : m.quoted.message.listResponseMessage
+                  ? m.quoted.message.listResponseMessage.singleSelectReply.selectedRowId
+                  : m.quoted.message.templateButtonReplyMessage
+                    ? m.quoted.message.templateButtonReplyMessage.selectedId
+                    : m.quoted.message.reactionMessage
+                      ? m.quoted.message.reactionMessage.text
+                      : m.quoted.message.locationMessage
+                        ? m.quoted.message.locationMessage.comment
+                        : ""
     m.quoted.mentions = m.quoted.message[m.quoted.type]?.contextInfo?.mentionedJid || []
     m.quoted.viewOnce = !!m.message[m.type].contextInfo.quotedMessage?.viewOnceMessage || !!m.message[m.type].contextInfo.quotedMessage?.viewOnceMessageV2 || !!m.message[m.type].contextInfo.quotedMessage?.viewOnceMessageV2Extension
     function reply(text: string, quoted = false) {

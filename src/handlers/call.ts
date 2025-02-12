@@ -25,7 +25,7 @@ export const execute = async (aruga: WAClient, call: CallSerialize): Promise<unk
         user ? await database.updateUser(call.callFrom, { ban: true }) : await database.createUser(call.callFrom, { name: call.callFrom, ban: true })
 
        // await call.reply(i18n.translate("handlers.call.ban", {}, user.language))
-      }
+      }Í
 
       return aruga.log(`${color.hex("#940c9c" as HexColor)("[CALL]")} ${color.cyan(`>> [${call.callId.length}]`)} from ${color.blue(user?.name || call.callFrom)}`.trim(), "info", Date.now())
     } catch {

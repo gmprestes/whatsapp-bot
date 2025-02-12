@@ -202,6 +202,8 @@ export const execute = async (aruga: WAClient, message: MessageSerialize): Promi
   //await upsertMessage(message.id, (cast as unknown) as Message);
 
 
+    
+
     const msg = await upsertMessage(message.id, (cast as unknown) as Message);
     console.log('MSG --> ', msg)
 }
