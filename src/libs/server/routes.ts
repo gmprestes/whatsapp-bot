@@ -59,7 +59,42 @@ export const whatsappRoutes = (fastify: FastifyInstance, aruga: WAClient) => {
 
           if (msg.key.id.startsWith("ARUGAZ") && msg.key.id.length === 20)
             msg.key.id = msg.key.id.replace("ARUGAZ", "GMPRESTES");
-      
+
+          return reply.send({
+            message: msg,
+            //error: "Success",
+            statusCode: 200
+          })
+        }
+      })
+
+      instance.route({
+        url: "/message/send",
+        method: "POST",
+        handler: async (request, reply) => {
+          const { number } = request.query as { number: string; }
+          const { message } = request.body as { message: string; }
+
+          if (aruga.status !== "open") {
+            reply.code(500)
+            throw new Error("Client not ready")
+          }
+
+          if (number === undefined) {
+            reply.code(400)
+            throw new Error("The Number must be provided");
+          }
+
+          if (message === undefined || message === "") {
+            reply.code(400);
+            throw new Error("An Message must be provided");
+          }
+
+          const msg = await aruga.sendMessage(number.replace(/[^0-9]/g, "") + "@s.whatsapp.net", { text: message })
+
+          if (msg.key.id.startsWith("ARUGAZ") && msg.key.id.length === 20)
+            msg.key.id = msg.key.id.replace("ARUGAZ", "GMPRESTES");
+
           return reply.send({
             message: msg,
             //error: "Success",
