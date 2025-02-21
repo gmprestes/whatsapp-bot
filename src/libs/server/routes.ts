@@ -55,7 +55,13 @@ export const whatsappRoutes = (fastify: FastifyInstance, aruga: WAClient) => {
             throw new Error("An Message must be provided");
           }
 
-          const msg = await aruga.sendMessage(number.replace(/[^0-9]/g, "") + "@s.whatsapp.net", { text: message })
+          const is_on_whatsapp = await aruga.onWhatsApp(number.replace(/[^0-9]/g, ""))
+          if(!is_on_whatsapp[0] || !is_on_whatsapp[0].exists) {
+            reply.code(400)
+            throw new Error("The Number is not on WhatsApp");
+          }
+
+          const msg = await aruga.sendMessage(is_on_whatsapp[0].jid, { text: message })
 
           if (msg.key.id.startsWith("ARUGAZ") && msg.key.id.length === 20)
             msg.key.id = msg.key.id.replace("ARUGAZ", "GMPRESTES");
@@ -90,7 +96,13 @@ export const whatsappRoutes = (fastify: FastifyInstance, aruga: WAClient) => {
             throw new Error("An Message must be provided");
           }
 
-          const msg = await aruga.sendMessage(number.replace(/[^0-9]/g, "") + "@s.whatsapp.net", { text: message })
+          const is_on_whatsapp = await aruga.onWhatsApp(number.replace(/[^0-9]/g, ""))
+          if(!is_on_whatsapp[0] || !is_on_whatsapp[0].exists) {
+            reply.code(400)
+            throw new Error("The Number is not on WhatsApp");
+          }
+
+          const msg = await aruga.sendMessage(is_on_whatsapp[0].jid, { text: message })
 
           if (msg.key.id.startsWith("ARUGAZ") && msg.key.id.length === 20)
             msg.key.id = msg.key.id.replace("ARUGAZ", "GMPRESTES");
@@ -127,6 +139,33 @@ export const whatsappRoutes = (fastify: FastifyInstance, aruga: WAClient) => {
           })
         }
       })
+
+      instance.route({
+        url: "/number/is-on-whatsapp",
+        method: "GET",
+        handler: async (request, reply) => {
+          const { number } = request.query as { number: string;}
+          if (aruga.status !== "open") {
+            reply.code(500)
+            throw new Error("Client not ready")
+          }
+
+          if (number === undefined) {
+            reply.code(400)
+            throw new Error("The Number must be provided");
+          }
+
+          const msg = await aruga.onWhatsApp(number.replace(/[^0-9]/g, ""))
+
+          return reply.send({
+            message: msg,
+            //error: "Success",
+            statusCode: 200
+          })
+        }
+      })
+
+
     },
     { prefix: "/api" }
   )
